@@ -1,25 +1,38 @@
 const selectEstablecimiento = document.getElementById('select_establecimiento');
 const selectipOficina = document.getElementById('select_ipOficina');
 
+//patron iife
+
 function principal (){
     selectEstablecimiento.addEventListener('change', () => {
         if (selectEstablecimiento.value == "Seremi Central") {
             selectipOficina.innerHTML = "";
+            document.getElementById("select_ipOficina").disabled = false;
             ipCentral();
         } else if (selectEstablecimiento.value == "COMPIN CONCEPCION") {
             selectipOficina.innerHTML = "";
+            document.getElementById("select_ipOficina").disabled = false;
             ipCompin();
         } else if (selectEstablecimiento.value == "Coronel") {
             selectipOficina.innerHTML = "";
+            document.getElementById("select_ipOficina").disabled = false;
             ipCoronel();
         } else if (selectEstablecimiento.value == "Tome") {
             selectipOficina.innerHTML = "";
+            document.getElementById("select_ipOficina").disabled = false;
             ipTome();
+        } else if (selectEstablecimiento.value == 1) {
+            selectipOficina.innerHTML = "";
+            document.getElementById("select_ipOficina").disabled = true;
         }
     })
 }
 
 principal();
+
+
+
+
 
 
 
