@@ -4,28 +4,34 @@ const inputRut = document.getElementById('run');
 const btnBuscar = document.getElementById('btnBuscar');
 const nombreFuncionario = document.getElementById('nombre');
 const apellidoFuncionario = document.getElementById('apellido');
+const div_ip = document.getElementById('div_ip');
 
 //patron iife
 
 function principal (){
     selectEstablecimiento.addEventListener('change', () => {
         if (selectEstablecimiento.value == "Seremi Central") {
+            div_ip.removeAttribute('hidden');
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
             ipCentral();
         } else if (selectEstablecimiento.value == "COMPIN CONCEPCION") {
+            div_ip.removeAttribute('hidden');
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
             ipCompin();
         } else if (selectEstablecimiento.value == "Coronel") {
+            div_ip.removeAttribute('hidden');
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
             ipCoronel();
         } else if (selectEstablecimiento.value == "Tome") {
+            div_ip.removeAttribute('hidden');
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
             ipTome();
         } else if (selectEstablecimiento.value == 1) {
+            div_ip.setAttribute('hidden', true);
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = true;
         }
