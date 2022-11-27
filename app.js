@@ -1,5 +1,9 @@
 const selectEstablecimiento = document.getElementById('select_establecimiento');
 const selectipOficina = document.getElementById('select_ipOficina');
+const inputRut = document.getElementById('run');
+const btnBuscar = document.getElementById('btnBuscar');
+const nombreFuncionario = document.getElementById('nombre');
+const apellidoFuncionario = document.getElementById('apellido');
 
 //patron iife
 
@@ -29,12 +33,6 @@ function principal (){
 }
 
 principal();
-
-
-
-
-
-
 
 const select_oficina = async () => {
     try{
@@ -122,6 +120,38 @@ const ipTome = async () => {
 }
 
 select_oficina();
+
+function inputBuscarRut(){
+    inputRut.addEventListener('keyup', () => {
+        if (inputRut.value.length == 9 || inputRut.value.length == 10) {
+            buscarFuncionario();
+        }
+    })
+}
+inputBuscarRut();
+
+const buscarFuncionario = async () => {
+    try{
+        const response = await fetch('http://localhost:3000/api/funcionario');
+        const data = await response.json()
+        // console.log(data)
+        for (let i = 0; i < data.length; i++) {
+            // console.log(inputRut.value.length);
+            if(inputRut.value.length == 9 && inputRut.value == data[i].rut){
+                nombreFuncionario.value = data[i].nombres;
+                apellidoFuncionario.value = data[i].apellido_pat + " " + data[i].apellido_mat;
+            }else if (inputRut.value.length == 10 && inputRut.value == data[i].rut){
+                nombreFuncionario.value = data[i].nombres;
+                apellidoFuncionario.value = data[i].apellido_pat + " " + data[i].apellido_mat;
+            }             
+            
+        }
+    } catch(error){
+        console.log(error);
+    }
+}
+
+
 
 
 
