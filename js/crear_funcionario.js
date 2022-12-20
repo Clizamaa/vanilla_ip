@@ -29,6 +29,8 @@ function insertar(){
             'Funcionario creado!',
             'success'
             )
+        setTimeout(function(){ window.location.href = "http://127.0.0.1:5500/crear_funcionario.html"; }, 2000);
+
     }
         
     fetch(url, {
@@ -55,7 +57,8 @@ new gridjs.Grid({
         enabled: true,
         limit: 10,
     },
-    columns: ['Rut', 'Nombre', 'Apellido_pat', 'Apellido_mat'],
+    sort: true,
+    columns: ['Rut', 'Nombre', 'Apellido_pat', 'Apellido_mat', 'Acciones'],
     server: {
         url: 'http://localhost:3000/api/funcionario',
         then: data => data.map(row => ({
@@ -63,8 +66,41 @@ new gridjs.Grid({
             nombre: row.nombres,
             apellido_pat: row.apellido_pat,
             apellido_mat: row.apellido_mat,
-        }))
-    },
+            acciones: gridjs.h('button', {
+                className: 'btn btn-danger',
+                onClick: () => {
+                    Swal.fire({
+                        title: '¿Está seguro?',
+                        text: "No podrá revertir estos cambios",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, eliminar'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire(
+                                'Eliminado!',
+                                'El funcionario ha sido eliminado.',
+                                'success'
+                              )
+                            fetch('http://localhost:3000/api/funcionario/:id', {
+                                method: 'DELETE',
+                                body: JSON.stringify({rut: row.rut}),
+                                headers:{
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                            .then(res => res.json())
+                            .catch(error => console.error('Error:', error))
+                            .then(response => console.log('Success:', response));
+                        }
+                      })
+                }
+            }, 'Eliminar'),
+
+    })), //cierra el then
+    }, //cierra server
 
     style: {
         table: {
