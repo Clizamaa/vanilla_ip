@@ -6,56 +6,119 @@
     <title>Crear Funcionario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/style.css">
   </head>
   <body>
-        <div class="container mt-3">
-            <div class="card container" style="width: 48rem;">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h5 class="card-title display-6">Crear Usuario</h5>
-                    </div>
-                <form>
-                    <div class="mb-3 row form-group">
-                        <label for="run" class="col-sm-3 col-form-label">Run</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="run">
-                        </div>
-                    </div>
+  <div class="container-fluid">
 
-                    <div class="mb-3 row">
-                        <label for="nombre" class="col-sm-3 col-form-label">Nombre</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="nombre">
-                        </div>
-                    </div>
+      <div class="navigation">
+        <ul>
+              <li>
+                  <a href="#">
+                      <img src="assest/PNG/Color 2_SubSalud.png">
+                  </a>
+              </li>
+              <li>
+                  <a href="#">
+                      <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                      <span class="title">Panel de Control</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="http://127.0.0.1:5500/">
+                      <span class="icon"><ion-icon name="globe-outline"></ion-icon></span>
+                      <span class="title">Ingreso IP</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="http://127.0.0.1:5500/crear_funcionario.html">
+                      <span class="icon"><ion-icon name="print-outline"></ion-icon></span>
+                      <span class="title">Ingreso Usuario</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="#">
+                      <span class="icon"><ion-icon name="flag-outline"></ion-icon></span>
+                      <span class="title">opcion 3</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="#">
+                      <span class="icon"><ion-icon name="flag-outline"></ion-icon></span>
+                      <span class="title">opcion 4</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="#">
+                      <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                      <span class="title">Opciones</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="#">
+                      <span class="icon"><ion-icon name="log-in-outline"></ion-icon></span>
+                      <span class="title">Salir</span>
+                  </a>
+              </li>
+        </ul>
+      </div>
 
-                    <div class="mb-3 row">
-                        <label for="apellido" class="col-sm-3 col-form-label">Apellido Paterno</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="paterno">
+    <!-- div creacion de usuario -->
+    <div class="container register_card">
+                        <div class="card container" style="width: 48rem;">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <h5 class="card-title display-6">Crear Usuario</h5>
+                                </div>
+                            <form>
+                                <div class="mb-3 row form-group">
+                                    <label for="run" class="col-sm-3 col-form-label">Run</label>
+                                    <div class="col-sm-9">
+                                      <input type="text" class="form-control" id="run">
+                                    </div>
+                                </div>
+                
+                                <div class="mb-3 row">
+                                    <label for="nombre" class="col-sm-3 col-form-label">Nombre</label>
+                                    <div class="col-sm-9">
+                                      <input type="text" class="form-control" id="nombre">
+                                    </div>
+                                </div>
+                
+                                <div class="mb-3 row">
+                                    <label for="apellido" class="col-sm-3 col-form-label">Apellido Paterno</label>
+                                    <div class="col-sm-9">
+                                      <input type="text" class="form-control" id="paterno">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="apellido" class="col-sm-3 col-form-label">Apellido Materno</label>
+                                    <div class="col-sm-9">
+                                      <input type="text" class="form-control" id="materno">
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="text-center">
+                                <!-- <a href="#" type="button" class="btn btn-primary btn-lg btn-block" onclick="insertar()"></a> -->
+                                <button type="button" class="btn btn-primary btn-lg btn-block" onclick="insertar()">Crear</button>
+                            </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="apellido" class="col-sm-3 col-form-label">Apellido Materno</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="materno">
-                        </div>
-                    </div>
-                </form>
-                <div class="text-center">
-                    <a href="#" class="btn btn-success" onclick="insertar()">Crear</a>
-                </div>
-                </div>
-            </div>
-        </div>
+    </div>
 
-        <div class="container mt-3">
-            <div id="wrapper"></div>
-        </div>
+    <!-- div de tabla -->
+      <div class="container mt-3 tabla">
+      <div id="wrapper"></div>
+      </div>
+    
+  </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/crear_funcionario.js"></script>
+    <script src="/js/dashboard.js"></script>
   </body>
 </html>
