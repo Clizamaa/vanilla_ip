@@ -15,17 +15,17 @@ function principal (){
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
             ipCentral();
-        } else if (selectEstablecimiento.value == "COMPIN CONCEPCION") {
+        } else if (selectEstablecimiento.value == "COMPIN") {
             div_ip.removeAttribute('hidden');
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
             ipCompin();
-        } else if (selectEstablecimiento.value == "Coronel") {
+        } else if (selectEstablecimiento.value == "Oficina Coronel") {
             div_ip.removeAttribute('hidden');
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
             ipCoronel();
-        } else if (selectEstablecimiento.value == "Tome") {
+        } else if (selectEstablecimiento.value == "Oficina Tome") {
             div_ip.removeAttribute('hidden');
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
@@ -58,15 +58,15 @@ const select_oficina = async () => {
 
 const ipCentral = async () => {
     try{
-        const response = await fetch('http://localhost:3000/api/ipcentral');
+        const response = await fetch('http://localhost:3000/api/ipCentral');
         const data = await response.json()
-        // console.log(data)
+        console.log(data.length)
         for (let i = 0; i < data.length; i++) {
             option = document.createElement("option");
             option.value= data[i].ip;
             option.text= data[i].ip;
             select_ipOficina.appendChild(option);
-            // console.log(data[i].ip)
+            console.log(data[i].ip)
         }
     } catch(error){
         console.log(error);
@@ -75,9 +75,9 @@ const ipCentral = async () => {
 
 const ipCompin = async () => {
     try{
-        const response = await fetch('http://localhost:3000/api/ipcompin');
+        const response = await fetch('http://localhost:3000/api/ipCompin');
         const data = await response.json()
-        console.log(data)
+        console.log(data.length)
         for (let i = 0; i < data.length; i++) {
             option = document.createElement("option");
             option.value= data[i].ip;
@@ -160,39 +160,7 @@ const todoFuncionario = async () => {
         console.log(error);
     }
 }
-// new gridjs.Grid({
-//     search: true,
-//     pagination: {
-//         enabled: true,
-//         limit: 10,
-//     },
-//     columns: ['Rut', 'Nombre', 'Apellido_pat', 'Apellido_mat'],
-//     server: {
-//         url: 'http://localhost:3000/api/funcionario',
-//         then: data => data.map(row => ({
-//             rut: row.rut,
-//             nombre: row.nombres,
-//             apellido_pat: row.apellido_pat,
-//             apellido_mat: row.apellido_mat,
-//         }))
-//     },
 
-//     style: {
-//         table: {
-//           border: '3px solid #ccc',
-//           width: '100%'
-//         },
-//         th: {
-//           'background-color': 'rgba(0, 0, 0, 0.1)',
-//           color: '#000',
-//           'border-bottom': '3px solid #ccc',
-//           'text-align': 'center'
-//         },
-//         td: {
-//           'text-align': 'center'
-//         }
-//       }
-//   }).render(document.getElementById("wrapper"))
 
 
 
