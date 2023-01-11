@@ -14,7 +14,7 @@ new gridjs.Grid({
             rut: row.rut,
             nombres: row.nombres,
             apellidos: row.apellido_pat + " " +row.apellido_mat,
-            ip: row.ip,
+            ip: row.id_listadoIpes,
             acciones: 
             gridjs.html(
                 `<button class="btn btn-danger mx-3" onclick="obtenerId(${row.id})"><i class="fa-sharp fa-solid fa-trash"></i></button>` 

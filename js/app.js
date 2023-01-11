@@ -20,12 +20,12 @@ function principal (){
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
             ipCompin();
-        } else if (selectEstablecimiento.value == "Oficina Coronel") {
+        } else if (selectEstablecimiento.value == "Oficina Tome") {
             div_ip.removeAttribute('hidden');
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
             ipCoronel();
-        } else if (selectEstablecimiento.value == "Oficina Tome") {
+        } else if (selectEstablecimiento.value == "Oficina Coronel") {
             div_ip.removeAttribute('hidden');
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
@@ -60,13 +60,13 @@ const ipCentral = async () => {
     try{
         const response = await fetch('http://localhost:3000/api/ipCentral');
         const data = await response.json()
-        console.log(data.length)
+        // console.log(data)
         for (let i = 0; i < data.length; i++) {
             option = document.createElement("option");
             option.value= data[i].ip;
             option.text= data[i].ip;
-            select_ipOficina.appendChild(option);
-            console.log(data[i].ip)
+            selectipOficina.appendChild(option);
+            // console.log(data[i].ip)
         }
     } catch(error){
         console.log(error);
@@ -77,7 +77,7 @@ const ipCompin = async () => {
     try{
         const response = await fetch('http://localhost:3000/api/ipCompin');
         const data = await response.json()
-        console.log(data.length)
+        // console.log(data.length)
         for (let i = 0; i < data.length; i++) {
             option = document.createElement("option");
             option.value= data[i].ip;
@@ -151,15 +151,15 @@ const buscarFuncionario = async () => {
     }
 }
 
-const todoFuncionario = async () => {
-    try{
-        const response = await fetch('http://localhost:3000/api/funcionario');
-        const data = await response.json()
+// const todoFuncionario = async () => {
+//     try{
+//         const response = await fetch('http://localhost:3000/api/funcionario');
+//         const data = await response.json()
 
-    } catch(error){
-        console.log(error);
-    }
-}
+//     } catch(error){
+//         console.log(error);
+//     }
+// }
 
 
 
