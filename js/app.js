@@ -139,7 +139,7 @@ const buscarFuncionario = async () => {
     try{
         const response = await fetch('http://localhost:3000/api/funcionario');
         const data = await response.json()
-        console.log(data)
+        // console.log(data)
         for (let i = 0; i < data.length; i++) {
             if( inputRut.value == data[i].rut){
                     nombreFuncionario.value = data[i].nombres;
@@ -151,15 +151,24 @@ const buscarFuncionario = async () => {
     }
 }
 
-// const todoFuncionario = async () => {
-//     try{
-//         const response = await fetch('http://localhost:3000/api/funcionario');
-//         const data = await response.json()
+function insertarIpe (){
+    const url = 'http://localhost:3000/api/funcionario';
+    const data = {
+        ip: selectipOficina.value,
+    }
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })    
+}
 
-//     } catch(error){
-//         console.log(error);
-//     }
-// }
+
+
+
+
 
 
 

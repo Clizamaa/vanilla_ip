@@ -9,19 +9,20 @@ new gridjs.Grid({
     sort: true,
     columns: ['Rut', 'Nombres', 'Apellidos', 'IP', 'Acciones'],
     server: {
-        url: 'http://localhost:3000/api/funcionario',
+        url: 'http://localhost:3000/api/segmento/',
         then: data => data.map(row => ({
             rut: row.rut,
             nombres: row.nombres,
             apellidos: row.apellido_pat + " " +row.apellido_mat,
-            ip: row.id_listadoIpes,
+            ip: row.ip,
+
             acciones: 
             gridjs.html(
                 `<button class="btn btn-danger mx-3" onclick="obtenerId(${row.id})"><i class="fa-sharp fa-solid fa-trash"></i></button>` 
                 +
                 `<button class="btn btn-warning" id="editar" onclick="modalEditar(${row.id})"><i class="fa-regular fa-pen-to-square"></i></button>`
             )
-    })), //cierra el then
+    })),//cierra el then
     }, //cierra server
     style: {
         table: {
@@ -39,3 +40,5 @@ new gridjs.Grid({
         }
       }
   }).render(document.getElementById("tabla_ip"))
+
+  
