@@ -24,12 +24,12 @@ function principal (){
             div_ip.removeAttribute('hidden');
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
-            ipCoronel();
+            ipTome();
         } else if (selectEstablecimiento.value == "Oficina Coronel") {
             div_ip.removeAttribute('hidden');
             selectipOficina.innerHTML = "";
             document.getElementById("select_ipOficina").disabled = false;
-            ipTome();
+            ipCoronel();
         } else if (selectEstablecimiento.value == 1) {
             div_ip.setAttribute('hidden', true);
             selectipOficina.innerHTML = "";
@@ -48,7 +48,7 @@ const select_oficina = async () => {
              option.value= data[i].nombre;
              option.text= data[i].nombre;
              selectEstablecimiento.appendChild(option);
-            //  console.log(data[i].nombre)
+              //console.log(data[i])
          }
         //  console.log(data)
     } catch(error){
@@ -63,7 +63,7 @@ const ipCentral = async () => {
         // console.log(data)
         for (let i = 0; i < data.length; i++) {
             option = document.createElement("option");
-            option.value= data[i].ip;
+            option.value= data[i].id;
             option.text= data[i].ip;
             selectipOficina.appendChild(option);
             // console.log(data[i].ip)
@@ -80,7 +80,7 @@ const ipCompin = async () => {
         // console.log(data.length)
         for (let i = 0; i < data.length; i++) {
             option = document.createElement("option");
-            option.value= data[i].ip;
+            option.value= data[i].id;
             option.text= data[i].ip;
             select_ipOficina.appendChild(option);
             // console.log(data[i].ip)
@@ -97,7 +97,7 @@ const ipCoronel = async () => {
         // console.log(data)
         for (let i = 0; i < data.length; i++) {
             option = document.createElement("option");
-            option.value= data[i].ip;
+            option.value= data[i].id;
             option.text= data[i].ip;
             select_ipOficina.appendChild(option);
             // console.log(data[i].ip)
@@ -114,7 +114,7 @@ const ipTome = async () => {
         // console.log(data)
         for (let i = 0; i < data.length; i++) {
             option = document.createElement("option");
-            option.value= data[i].ip;
+            option.value= data[i].id;
             option.text= data[i].ip;
             select_ipOficina.appendChild(option);
             // console.log(data[i].ip)
@@ -151,18 +151,30 @@ const buscarFuncionario = async () => {
     }
 }
 
-function insertarIpe (){
-    const url = 'http://localhost:3000/api/funcionario';
-    const data = {
-        ip: selectipOficina.value,
-    }
-    fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
+// actualizar columna id_listadoip de tabla funcionario
+const actualizarFuncionario = async () => {
+    try{
+        const response = await fetch('http://localhost:3000/api/funcionario');
+        const data = await response.json()
+        // console.log(data)
+        for (let i = 0; i < data.length; i++) {
+            if( inputRut.value == data[i].rut){
+                const response = await fetch('http://localhost:3000/api/funcionario/' + data[i].id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id_listadoip: selectipOficina.value
+                    })
+                })
+                const data = await response.json();
+            }
+             console.log(data[i]);
         }
-    })    
+    } catch(error){
+        console.log(error);
+    }
 }
 
 
