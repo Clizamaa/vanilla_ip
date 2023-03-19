@@ -1,44 +1,56 @@
 //configuracion de la tabla
-new gridjs.Grid({
-    search: true,
-    pagination: {
-        enabled: true,
-        limit: 5,
-        resetPagesOnUpdate: true,
-    },
-    sort: true,
-    columns: ['Rut', 'Nombres', 'Apellidos', 'IP', 'Acciones'],
-    server: {
-        url: 'http://localhost:3000/api/segmento/',
-        then: data => data.map(row => ({
-            rut: row.rut,
-            nombres: row.nombres,
-            apellidos: row.apellido_pat + " " +row.apellido_mat,
-            ip: row.ip,
+let dataTable;
+let dataTableIsInitialized = false;
 
-            acciones: 
-            gridjs.html(
-                `<button class="btn btn-danger mx-3" onclick="obtenerId(${row.id})"><i class="fa-sharp fa-solid fa-trash"></i></button>` 
-                +
-                `<button class="btn btn-warning" id="editar" onclick="modalEditar(${row.id})"><i class="fa-regular fa-pen-to-square"></i></button>`
-            )
-    })),//cierra el then
-    }, //cierra server
-    style: {
-        table: {
-          border: '3px solid #ccc',
-          width: '100%'
-        },
-        th: {
-          'background-color': 'rgba(0, 0, 0, 0.1)',
-          color: '#000',
-          'border-bottom': '3px solid #ccc',
-          'text-align': 'center'
-        },
-        td: {
-          'text-align': 'center'
-        }
-      }
-  }).render(document.getElementById("tabla_ip"))
+const initDataTable = async() => {
+    if(dataTableIsInitialized){
+        dataTable.destroy();
+    }
+
+    await listUser();
+    dataTable = $("#datatable_users").dataTable({});
+    dataTableIsInitialized = true;
+};
+
+
+const listUser= async()=>{
+    try {
+        const response= await fetch('http://localhost:3000/api/funcionario');
+        const data= await response.json();
+
+        let content= ``;
+        data.forEach((user, index)=>{
+            content+= `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${user.rut}</td>
+                    <td>${user.nombres}</td>
+                    <td>${user.apellido_pat +" "+ user.apellido_mat}</td>
+                    <td>
+                    <button type="button" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button> 
+                    <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+        });
+        tableBody_users.innerHTML= content;
+    } catch (error) {
+        alert(error);
+    }
+};
+
+window.addEventListener('load', async()=>{
+ await initDataTable();
+});
+
+
+
+  
+
+
+
+
+
+  
 
   

@@ -151,31 +151,10 @@ const buscarFuncionario = async () => {
     }
 }
 
-// actualizar columna id_listadoip de tabla funcionario
-const actualizarFuncionario = async () => {
-    try{
-        const response = await fetch('http://localhost:3000/api/funcionario');
-        const data = await response.json()
-        // console.log(data)
-        for (let i = 0; i < data.length; i++) {
-            if( inputRut.value == data[i].rut){
-                const response = await fetch('http://localhost:3000/api/funcionario/' + data[i].id, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        id_listadoip: selectipOficina.value
-                    })
-                })
-                const data = await response.json();
-            }
-             console.log(data[i]);
-        }
-    } catch(error){
-        console.log(error);
-    }
-}
+//
+
+
+
 
 
 
