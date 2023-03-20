@@ -1,7 +1,8 @@
 window.addEventListener('load', async()=>{
   await initDataTable();
  });
- 
+ const btnRegistar= document.getElementById('btnRegistrar');
+
 //configuracion de la tabla
 let dataTable;
 let dataTableIsInitialized = false;
@@ -15,7 +16,7 @@ const initDataTable = async() => {
     dataTable = $("#datatable_users").dataTable({
       lengthMenu: [
         [5, 10, 15, -1],
-        [5, 10, 15, "All"]
+        [5, 10, 15, "Todos"]
       ],
       language: {
         search: "_INPUT_",
@@ -58,8 +59,8 @@ const listUser= async()=>{
                     <td>${user.apellido_pat +" "+ user.apellido_mat}</td>
                     <td>${user.id_listadoIpes}</td>
                     <td>
-                    <button type="button" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button> 
-                    <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                    <button type="button" onclick="editUser('${user.id}')" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button> 
+                    <button type="button" onclick="deleteUser('${user.id}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `;
@@ -70,7 +71,50 @@ const listUser= async()=>{
     }
 };
 
+//agregar evento boton actualiza un usuario
+
+btnRegistar.addEventListener('click', async()=>{
+    try {
+        const response = await fetch(`http://localhost:3000/api/funcionario/${id}`,{
+          method:'PUT',
+          body: JSON.stringify({
+            id_listadoIpes: document.getElementById('select_ipOficina').value,
+        })
+      });
+        const data= await response.json();
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
 //funcion editar un usuario
+const editUser= async(id)=>{
+    try {
+        const response= await fetch(`http://localhost:3000/api/funcionario/${id}`);
+        const data= await response.json();
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+//funcion eliminar un usuario
+const deleteUser= async(id)=>{
+    try {
+        const response= await fetch(`http://localhost:3000/api/funcionario/${id}`,{
+            method: 'DELETE'
+        });
+        console.log(response);
+        const data= await response.json();
+        console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+};
+
+
 
 
 
