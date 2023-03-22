@@ -46,7 +46,7 @@ const initDataTable = async() => {
 
 const listUser= async()=>{
     try {
-        const response= await fetch('http://localhost:3000/api/funcionario');
+        const response= await fetch('http://localhost:3000/api/segmento');
         const data= await response.json();
 
         let content= ``;
@@ -57,7 +57,7 @@ const listUser= async()=>{
                     <td>${user.rut}</td>
                     <td>${user.nombres}</td>
                     <td>${user.apellido_pat +" "+ user.apellido_mat}</td>
-                    <td>${user.id_listadoIpes}</td>
+                    <td>${user.ip}</td>
                     <td>
                     <button type="button" onclick="editUser('${user.id}')" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button> 
                     <button type="button" onclick="deleteUser('${user.id}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
@@ -71,28 +71,34 @@ const listUser= async()=>{
     }
 };
 
-//agregar evento boton actualiza un usuario
+//funcion actualizar un funcionario
+const updateUser= async(id)=>{
+    try {console.log(select_ipOficina.value)
+        const response= await fetch(`http://localhost:3000/api/funcionario/${id}`,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
 
-btnRegistar.addEventListener('click', async()=>{
-    try {
-        const response = await fetch(`http://localhost:3000/api/funcionario/${id}`,{
-          method:'PUT',
-          body: JSON.stringify({
-            id_listadoIpes: document.getElementById('select_ipOficina').value,
-        })
-      });
+                id_listadoIpes: select_ipOficina.value,
+              
+            })
+        });
         const data= await response.json();
         console.log(data);
     } catch (error) {
         console.log(error);
     }
-});
+};
+
+
 
 
 //funcion editar un usuario
 const editUser= async(id)=>{
     try {
-        const response= await fetch(`http://localhost:3000/api/funcionario/${id}`);
+        const response= await fetch(`http://localhost:3000/api/segmento/${id}`);
         const data= await response.json();
         console.log(data);
     } catch (error) {

@@ -8,6 +8,11 @@ const div_ip = document.getElementById('div_ip');
 
 //patron iife
 
+let persona= {
+    id:null,
+    id_listadoIpes:null,
+}
+
 function principal (){
     selectEstablecimiento.addEventListener('change', () => {
         if (selectEstablecimiento.value == "Seremi Central") {
@@ -144,6 +149,8 @@ const buscarFuncionario = async () => {
             if( inputRut.value == data[i].rut){
                     nombreFuncionario.value = data[i].nombres;
                     apellidoFuncionario.value = data[i].apellido_pat + " " + data[i].apellido_mat;
+                    persona.id = data[i].id;
+                    persona.id_listadoIpes = selectipOficina.value;
             }
         }
     } catch(error){
