@@ -72,25 +72,26 @@ const listUser= async()=>{
 };
 
 //funcion actualizar un funcionario
-const updateUser= async(id)=>{
-    try {console.log(select_ipOficina.value)
-        const response= await fetch(`http://localhost:3000/api/funcionario/${id}`,{
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+// const updateUser= async(id)=>{
+//     try {
+//         // console.log(select_ipOficina.value)
+//         const response= await fetch(`http://localhost:3000/api/funcionario/${id}`,{
+//             method: 'PUT',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
 
-                id_listadoIpes: select_ipOficina.value,
+//                 id_listadoIpes: select_ipOficina.value,
               
-            })
-        });
-        const data= await response.json();
-        console.log(data);
-    } catch (error) {
-        console.log(error);
-    }
-};
+//             })
+//         });
+//         const data= await response.json();
+//         // console.log(data);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
 
 
 

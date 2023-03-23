@@ -9,8 +9,13 @@ const div_ip = document.getElementById('div_ip');
 //patron iife
 
 let persona= {
-    id:null,
-    id_listadoIpes:null,
+    id: "",
+    rut: "",
+    nombres: "",
+    apellido_pat: "",
+    apellido_mat: "",
+    id_listadoIpes: "",
+    
 }
 
 function principal (){
@@ -147,16 +152,42 @@ const buscarFuncionario = async () => {
         // console.log(data)
         for (let i = 0; i < data.length; i++) {
             if( inputRut.value == data[i].rut){
-                    nombreFuncionario.value = data[i].nombres;
-                    apellidoFuncionario.value = data[i].apellido_pat + " " + data[i].apellido_mat;
-                    persona.id = data[i].id;
-                    persona.id_listadoIpes = selectipOficina.value;
+            // si lo ingresado en input rut coincide con el rut de la base de datos
+                    nombreFuncionario.value = data[i].nombres; // se muestra el nombre del funcionario en el input
+                    apellidoFuncionario.value = data[i].apellido_pat + " " + data[i].apellido_mat; // se muestra los apellidow del funcionario en el input
+                    persona.id = data[i].id; // se guarda el id del funcionario en el objeto persona
+                    persona.rut = data[i].rut; // se guarda el rut del funcionario en el objeto persona
+                    persona.nombres = data[i].nombres; // se guarda el nombre del funcionario en el objeto persona
+                    persona.apellido_pat = data[i].apellido_pat; // se guarda el apellido paterno del funcionario en el objeto persona
+                    persona.apellido_mat = data[i].apellido_mat; // se guarda el apellido materno del funcionario en el objeto persona    
+
+            }if (!inputRut.value == "") { // si el input rut no esta vacio
+                persona.id_listadoIpes = selectipOficina.value; // se guarda el id de la ip seleccionada en el objeto persona
             }
         }
     } catch(error){
         console.log(error);
     }
 }
+
+//funcion actualizar el funcionario
+const updateUser = async () => {
+    try{
+        console.log(persona)
+        const response = await fetch(`http://localhost:3000/api/funcionario/${persona.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(persona)
+        });
+        const data = await response.json()
+        console.log(data)
+    } catch(error){
+        console.log(error);
+    }
+}
+
 
 
 
