@@ -43,59 +43,6 @@ const initDataTable = async() => {
     dataTableIsInitialized = true;
 };
 
-
-const listUser= async()=>{
-    try {
-        const response= await fetch('http://localhost:3000/api/segmento');
-        const data= await response.json();
-
-        let content= ``;
-        data.forEach((user, index)=>{
-            content+= `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${user.rut}</td>
-                    <td>${user.nombres}</td>
-                    <td>${user.apellido_pat +" "+ user.apellido_mat}</td>
-                    <td>${user.ip}</td>
-                    <td>
-                    <button type="button" onclick="editUser('${user.id}')" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button> 
-                    <button type="button" onclick="deleteUser('${user.id}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `;
-        });
-        tableBody_users.innerHTML= content;
-    } catch (error) {
-        alert(error);
-    }
-};
-
-//funcion actualizar un funcionario
-// const updateUser= async(id)=>{
-//     try {
-//         // console.log(select_ipOficina.value)
-//         const response= await fetch(`http://localhost:3000/api/funcionario/${id}`,{
-//             method: 'PUT',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify({
-
-//                 id_listadoIpes: select_ipOficina.value,
-              
-//             })
-//         });
-//         const data= await response.json();
-//         // console.log(data);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
-
-
-
-
 //funcion editar un usuario
 const editUser= async(id)=>{
     try {
@@ -107,19 +54,7 @@ const editUser= async(id)=>{
     }
 };
 
-//funcion eliminar un usuario
-const deleteUser= async(id)=>{
-    try {
-        const response= await fetch(`http://localhost:3000/api/funcionario/${id}`,{
-            method: 'DELETE'
-        });
-        console.log(response);
-        const data= await response.json();
-        console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-};
+
 
 
 

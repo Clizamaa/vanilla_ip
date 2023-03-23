@@ -170,23 +170,94 @@ const buscarFuncionario = async () => {
     }
 }
 
+// funcion listar funcionarios en tabla
+const listUser= async()=>{
+    try {
+        const response= await fetch('http://localhost:3000/api/segmento');
+        const data= await response.json();
+
+        let content= ``;
+        data.forEach((user, index)=>{
+            content+= `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${user.rut}</td>
+                    <td>${user.nombres}</td>
+                    <td>${user.apellido_pat +" "+ user.apellido_mat}</td>
+                    <td>${user.ip}</td>
+                    <td>
+                    <button type="button" onclick="editUser('${user.id}')" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button> 
+                    <button type="button" onclick="deleteIPUser('${user.id}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+        });
+        // console.log(data);
+        tableBody_users.innerHTML= content;
+    } catch (error) {
+        alert(error);
+    }
+};
+
 //funcion actualizar el funcionario
 const updateUser = async () => {
     try{
         console.log(persona)
-        const response = await fetch(`http://localhost:3000/api/funcionario/${persona.id}`, {
+        const response = await fetch(`http://localhost:3000/api/funcionario/${persona.id}`, 
+        {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(persona)
-        });
+        },
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Ip Asignada!',
+            showConfirmButton: false,
+            timer: 2000
+          }),   
+          setTimeout(() => {
+            window.location.reload();
+        }, 2000)
+        );
         const data = await response.json()
         console.log(data)
     } catch(error){
         console.log(error);
     }
 }
+
+//funcion eliminar la ip de un funcionario
+const deleteIPUser = async () => {
+    try{
+        
+        const response = await fetch(`http://localhost:3000/api/funcionario/ip/${id}`, 
+        {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        },
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Ip eliminada!',
+            showConfirmButton: false,
+            timer: 2000
+          }),   
+        );
+        const data = await response.json()
+        console.log(data)
+    } catch(error){
+        console.log(error);
+    }
+}
+
+
+
 
 
 
