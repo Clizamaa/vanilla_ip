@@ -1,3 +1,7 @@
+window.addEventListener('load', async()=>{
+    await initDataTable();
+   });
+
 const run = document.getElementById('run');
 const nombre = document.getElementById('nombre');
 const paterno = document.getElementById('paterno');
@@ -50,46 +54,71 @@ function insertar(){
 }
 
 //configuracion de la tabla
-new gridjs.Grid({
-    search: true,
-    pagination: {
-        enabled: true,
-        limit: 5,
-        resetPagesOnUpdate: true,
-    },
-    sort: true,
-    columns: ['Rut', 'Nombre', 'Apellido_pat', 'Apellido_mat', 'Acciones'],
-    server: {
-        url: 'http://localhost:3000/api/funcionario',
-        then: data => data.map(row => ({
-            rut: row.rut,
-            nombre: row.nombres,
-            apellido_pat: row.apellido_pat,
-            apellido_mat: row.apellido_mat,
-            acciones: 
-            gridjs.html(
-                `<button class="btn btn-danger mx-3" onclick="obtenerId(${row.id})"><i class="fa-sharp fa-solid fa-trash"></i></button>` 
-                +
-                `<button class="btn btn-warning" id="editar" onclick="modalEditar(${row.id})"><i class="fa-regular fa-pen-to-square"></i></button>`
-            )
-    })), //cierra el then
-    }, //cierra server
-    style: {
-        table: {
-          border: '3px solid #ccc',
-          width: '100%'
+let dataTable;
+let dataTableIsInitialized = false;
+
+const initDataTable = async() => {
+    if(dataTableIsInitialized){
+        dataTable.destroy();
+    }
+
+    await listUser();
+    dataTable = $("#datatable_usuarios").dataTable({
+      lengthMenu: [
+        [5, 10, 15, -1],
+        [5, 10, 15, "Todos"]
+      ],
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Buscar...",
+        lengthMenu: "Mostrar _MENU_ registros",
+        zeroRecords: "No se encontraron resultados",
+        info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+        infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+        infoFiltered: "(filtrado de un total de _MAX_ registros)",
+        paginate: {
+          first: "Primero",
+          last: "Último",
+          next: "Siguiente",
+          previous: "Anterior"
         },
-        th: {
-          'background-color': 'rgba(0, 0, 0, 0.1)',
-          color: '#000',
-          'border-bottom': '3px solid #ccc',
-          'text-align': 'center'
-        },
-        td: {
-          'text-align': 'center'
+        aria: {
+          sortAscending: ": Activar para ordenar la columna de manera ascendente",
+          sortDescending: ": Activar para ordenar la columna de manera descendente"
         }
-      }
-  }).render(document.getElementById("wrapper"))
+      },
+      responsive: true,
+      autoWidth: false,
+    });
+    dataTableIsInitialized = true;
+};
+
+const listUser= async()=>{
+    try {
+        const response= await fetch('http://localhost:3000/api/segmento');
+        const data= await response.json();
+
+        let content= ``;
+        data.forEach((user, index)=>{
+            content+= `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${user.rut}</td>
+                    <td>${user.nombres}</td>
+                    <td>${user.apellido_pat +" "+ user.apellido_mat}</td>
+                    <td>
+                    <button type="button" onclick="modalEditar('${user.id}')" class="btn btn-warning"><i class="fa-solid fa-edit"></i></button>
+                    <button type="button" onclick="deleteIPUser('${user.id}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+        });
+        // console.log(data);
+        tableBody_usuarios.innerHTML= content;
+    } catch (error) {
+        alert(error);
+    }
+};
 
 
 function obtenerId(id){

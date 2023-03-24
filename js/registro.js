@@ -186,7 +186,7 @@ const listUser= async()=>{
                     <td>${user.apellido_pat +" "+ user.apellido_mat}</td>
                     <td>${user.ip}</td>
                     <td>
-                    <button type="button" onclick="editUser('${user.id}')" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button> 
+                     
                     <button type="button" onclick="deleteIPUser('${user.id}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
@@ -230,9 +230,9 @@ const updateUser = async () => {
 }
 
 //funcion eliminar la ip de un funcionario
-const deleteIPUser = async () => {
+const deleteIPUser = async (id) => {
     try{
-        
+        // console.log(id)
         const response = await fetch(`http://localhost:3000/api/funcionario/ip/${id}`, 
         {
             method: 'PUT',
