@@ -18,7 +18,15 @@ function insertar(){
         apellido_pat: paterno.value,
         apellido_mat: materno.value,
     };
-    // console.log(data);
+    if(!rut == null){
+        Swal.fire(
+            'Error',
+            'El rut ya existe!',
+            'error'
+          )
+        return;
+    }
+
     //run.value.trim().length==0 es para que no se pueda ingresar un campo vacio
     if(run.value.trim().length==0 || nombre.value.trim().length==0 || paterno.value.trim().length==0 || materno.value.trim().length==0){
         Swal.fire(
@@ -31,11 +39,16 @@ function insertar(){
         Swal.fire(
             'Exito',
             'Funcionario creado!',
-            'success'
+            'success',
+            {
+                timer: 2000
+            }
             )
         setTimeout(function(){ window.location.href = "http://127.0.0.1:5500/crear_funcionario.html"; }, 2000);
     }
-        
+
+
+    
     fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -43,6 +56,7 @@ function insertar(){
             'Content-Type': 'application/json'
         }
     })
+   
     .then(res => res.json())
     .catch(error => console.error('Error:', error))
     .then(response => console.log('Success:', response));
@@ -95,7 +109,7 @@ const initDataTable = async() => {
 
 const listUser= async()=>{
     try {
-        const response= await fetch('http://localhost:3000/api/segmento');
+        const response= await fetch('http://localhost:3000/api/funcionario');
         const data= await response.json();
 
         let content= ``;
