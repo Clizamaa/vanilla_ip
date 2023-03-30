@@ -6,6 +6,7 @@ const run = document.getElementById('run');
 const nombre = document.getElementById('nombre');
 const paterno = document.getElementById('paterno');
 const materno = document.getElementById('materno');
+const inputRut = document.getElementById('run');
 
 
 function insertar(){
@@ -18,14 +19,6 @@ function insertar(){
         apellido_pat: paterno.value,
         apellido_mat: materno.value,
     };
-    if(!rut == null){
-        Swal.fire(
-            'Error',
-            'El rut ya existe!',
-            'error'
-          )
-        return;
-    }
 
     //run.value.trim().length==0 es para que no se pueda ingresar un campo vacio
     if(run.value.trim().length==0 || nombre.value.trim().length==0 || paterno.value.trim().length==0 || materno.value.trim().length==0){
@@ -122,7 +115,7 @@ const listUser= async()=>{
                     <td>${user.apellido_pat +" "+ user.apellido_mat}</td>
                     <td>
                     <button type="button" onclick="modalEditar('${user.id}')" class="btn btn-warning"><i class="fa-solid fa-edit"></i></button>
-                    <button type="button" onclick="deleteIPUser('${user.id}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                    <button type="button" onclick="eliminar('${user.id}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `;
@@ -182,6 +175,8 @@ function editar(id){
     setTimeout(function(){ window.location.href = "http://127.0.0.1:5500/crear_funcionario.html"; }, 1000);
 }
 
+//
+
 function modalEditar(id){
     console.log(id)
     Swal.fire({
@@ -216,6 +211,37 @@ const allusers = () => {
     .then (data => {
         console.log(data)
     })
+}
+
+function inputBuscarRut(){
+    inputRut.addEventListener('keyup', () => {
+        if (inputRut.value.length >= 9) {
+            buscarFuncionario();
+        }
+    })
+}
+inputBuscarRut();
+
+const buscarFuncionario = async () => {
+    try{
+        const response = await fetch('http://localhost:3000/api/funcionario');
+        const data = await response.json()
+        // console.log(data)
+        for (let i = 0; i < data.length; i++) {
+            if( inputRut.value == data[i].rut){
+             
+                Swal.fire(
+                    'Error',
+                    'Funcionario ya existe!',
+                    'error'
+                  )
+                return;
+
+            }
+        }
+    } catch(error){
+        console.log(error);
+    }
 }
 
 

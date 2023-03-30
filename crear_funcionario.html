@@ -53,11 +53,14 @@
                                 <div class="text-center">
                                     <h5 class="card-title display-6">Crear Usuario</h5>
                                 </div>
-                            <form>
+                            <form class="needs-validation" novalidate>
                                 <div class="mb-3 row form-group">
                                     <label for="run" class="col-sm-3 col-form-label">Run</label>
                                     <div class="col-sm-9">
-                                      <input type="text" class="form-control" id="run">
+                                      <input type="text" class="form-control" id="run" required autocomplete="off">
+                                      <div class="valid-tooltip">
+                                        Looks good!
+                                      </div>
                                     </div>
                                 </div>
                 
@@ -67,7 +70,6 @@
                                       <input type="text" class="form-control" id="nombre">
                                     </div>
                                 </div>
-                
                                 <div class="mb-3 row">
                                     <label for="apellido" class="col-sm-3 col-form-label">Apellido Paterno</label>
                                     <div class="col-sm-9">
@@ -82,8 +84,7 @@
                                 </div>
                             </form>
                             <div class="text-center">
-                                <!-- <a href="#" type="button" class="btn btn-primary btn-lg btn-block" onclick="insertar()"></a> -->
-                                <button type="button" class="btn btn-primary btn-lg btn-block" onclick="insertar()">Crear</button>
+                               <button type="button" class="btn btn-primary btn-lg btn-block" onclick="insertar()">Crear</button>
                             </div>
                             </div>
                         </div>
