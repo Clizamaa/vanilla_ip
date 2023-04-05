@@ -17,8 +17,16 @@ let funcionarios = {
     apellido_mat: '',
 };
 
+function toUpperCaseInputs(){
+    run.value = run.value.toUpperCase();
+    nombre.value = nombre.value.toUpperCase();
+    paterno.value = paterno.value.toUpperCase();
+    materno.value = materno.value.toUpperCase();
+}
+
 function insertar(){
     const url = 'http://localhost:3000/api/funcionario';
+    toUpperCaseInputs();
     const data = {
         //rut corresponde al nombre de la columna en la base de datos
         //run corresponde al id del input 
@@ -47,8 +55,6 @@ function insertar(){
             )
         setTimeout(function(){ window.location.href = "http://127.0.0.1:5500/crear_funcionario.html"; }, 2000);
     }
-
-
     
     fetch(url, {
         method: 'POST',
@@ -139,7 +145,7 @@ const listUser= async()=>{
                     <td>${user.nombres}</td>
                     <td>${user.apellido_pat +" "+ user.apellido_mat}</td>
                     <td>
-                    <button type="button" onclick="modalEditar('${user.id}')" class="btn btn-warning"><i class="fa-solid fa-edit"></i></button>
+                    <button type="button" onclick="editModal('${user.id}')" class="btn btn-warning"><i class="fa-solid fa-edit"></i></button>
                     <button type="button" onclick="eliminar('${user.id}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
@@ -152,50 +158,108 @@ const listUser= async()=>{
     }
 };
 
-function modalEditar(id){
-    const url = `http://localhost:3000/api/funcionario/${id}`;
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-        console.log(id, data)
-        run.value = data.rut;
-        nombre.value = data.nombres;
-        paterno.value = data.apellido_pat;
-        materno.value = data.apellido_mat;
-    }).catch(error => console.log(error));
+// function modalEditar(id){
+//     const url = `http://localhost:3000/api/funcionario/${id}`;
+//     fetch(url)
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log(id)
+//         run.value = data.rut;
+//         nombre.value = data.nombres;
+//         paterno.value = data.apellido_pat;
+//         materno.value = data.apellido_mat;
+//     }).catch(error => console.log(error));
     
-    Swal.fire({
-        title: 'Editar',
+//     Swal.fire({
+//         title: 'Editar',
+//         html:
+//         '<input id="runn" class="swal2-input" placeholder="Rut">' +
+//         '<input id="nombress" class="swal2-input" placeholder="Nombre">' +
+//         '<input id="apellido_pat" class="swal2-input" placeholder="Apellido paterno">' +
+//         '<input id="apellido_mat" class="swal2-input" placeholder="Apellido materno">',
+//         focusConfirm: false,
+//         preConfirm: () => {
+//             return [
+//                 document.getElementById('runn').value,
+//                 document.getElementById('nombress').value,
+//                 document.getElementById('apellido_pat').value,
+//                 document.getElementById('apellido_mat').value,
+//             ]
+//         }
+//     }).then((result) => {
+//         if (result.value) {
+//             swal.fire({
+//                 title: 'Actualizado',
+//                 text: 'Usuario modificado correctamente',
+//                 icon: 'success',
+//                 showConfirmButton: false,
+//                 timer: 2000
+//             })
+//             editar(id, result.value[0], result.value[1], result.value[2], result.value[3])
+//             setTimeout(() => {
+//                 location.reload();
+//             }, 2000);
+//         }
+//     })
+// }
+
+function editModal(id) {
+    try {
+      fetch(`http://localhost:3000/api/funcionario/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          run.value = data.rut;
+          nombres.value = data.nombres;
+          apellido_pat.value = data.apellido_pat;
+          apellido_mat.value = data.apellido_mat;
+        })
+        .catch((error) => console.log(error));
+  
+      Swal.fire({
+        title: "Editar",
         html:
-        '<input id="runn" class="swal2-input" placeholder="Rut">' +
-        '<input id="nombress" class="swal2-input" placeholder="Nombre">' +
-        '<input id="apellido_pat" class="swal2-input" placeholder="Apellido paterno">' +
-        '<input id="apellido_mat" class="swal2-input" placeholder="Apellido materno">',
+          '<input id="runn" class="swal2-input" placeholder="Rut">' +
+          '<input id="nombress" class="swal2-input" placeholder="Nombre">' +
+          '<input id="apellido_pat" class="swal2-input" placeholder="Apellido paterno">' +
+          '<input id="apellido_mat" class="swal2-input" placeholder="Apellido materno">',
         focusConfirm: false,
         preConfirm: () => {
-            return [
-                document.getElementById('runn').value,
-                document.getElementById('nombress').value,
-                document.getElementById('apellido_pat').value,
-                document.getElementById('apellido_mat').value,
-            ]
-        }
-    }).then((result) => {
+          return [
+            document.getElementById("runn").value,
+            document.getElementById("nombress").value,
+            document.getElementById("apellido_pat").value,
+            document.getElementById("apellido_mat").value,
+          ];
+        },
+      }).then((result) => {
         if (result.value) {
-            swal.fire({
-                title: 'Actualizado',
-                text: 'Usuario modificado correctamente',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 2000
+          swal
+            .fire({
+              title: "Actualizado",
+              text: "Usuario modificado correctamente",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 2000,
             })
-            editar(id, result.value[0], result.value[1], result.value[2], result.value[3])
-            setTimeout(() => {
+            .then(() => {
+              editar(
+                id,
+                result.value[0],
+                result.value[1],
+                result.value[2],
+                result.value[3]
+              );
+              setTimeout(() => {
                 location.reload();
-            }, 2000);
+              }, 2000);
+            });
         }
-    })
-}
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
 
 function editar(id, run, nombre, apellido_pat, apellido_mat){
     const url = `http://localhost:3000/api/funcionario/${id}`;
@@ -235,7 +299,6 @@ function obtenerId(id){
 }
 
 function eliminar(id){
-
     Swal.fire({
         title: '¿Estas Seguro?',
         text: "No podras revertir esto!",
@@ -253,17 +316,20 @@ function eliminar(id){
                     'Content-Type': 'application/json'
                 }
             })
-          Swal.fire(
-            'Eliminado',
-            'Usuario Eliminado Correctamente',
-            'success'
-          )
-          .then(res => res.json())
+            .then(res => res.json())
+            .then(response => {
+                Swal.fire(
+                  'Eliminado',
+                  'Usuario Eliminado Correctamente',
+                  'success'
+                );
+                location.reload();
+            })
+            .catch(error => console.error('Error:', error))
         }
       })
-    .catch(error => console.error('Error:', error))
-    .then(response => console.log('Success:', response));
-    // setTimeout(function(){ window.location.href = "http://127.0.0.1:5500/crear_funcionario.html"; }, 1000);
+   
+    
 }
 
 const allusers = () => {

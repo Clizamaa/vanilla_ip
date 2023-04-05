@@ -250,7 +250,7 @@ const deleteIPUser = async (id) => {
           }),   
         );
         const data = await response.json()
-        console.log(data)
+        setTimeout(() => location.reload(), 2000);
     } catch(error){
         console.log(error);
     }
