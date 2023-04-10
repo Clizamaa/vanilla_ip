@@ -158,107 +158,49 @@ const listUser= async()=>{
     }
 };
 
-// function modalEditar(id){
-//     const url = `http://localhost:3000/api/funcionario/${id}`;
-//     fetch(url)
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log(id)
-//         run.value = data.rut;
-//         nombre.value = data.nombres;
-//         paterno.value = data.apellido_pat;
-//         materno.value = data.apellido_mat;
-//     }).catch(error => console.log(error));
+async function editModal(id) {
+  try {
+    const response = await fetch(`http://localhost:3000/api/funcionario/${id}`);
+    const data = await response.json();
     
-//     Swal.fire({
-//         title: 'Editar',
-//         html:
-//         '<input id="runn" class="swal2-input" placeholder="Rut">' +
-//         '<input id="nombress" class="swal2-input" placeholder="Nombre">' +
-//         '<input id="apellido_pat" class="swal2-input" placeholder="Apellido paterno">' +
-//         '<input id="apellido_mat" class="swal2-input" placeholder="Apellido materno">',
-//         focusConfirm: false,
-//         preConfirm: () => {
-//             return [
-//                 document.getElementById('runn').value,
-//                 document.getElementById('nombress').value,
-//                 document.getElementById('apellido_pat').value,
-//                 document.getElementById('apellido_mat').value,
-//             ]
-//         }
-//     }).then((result) => {
-//         if (result.value) {
-//             swal.fire({
-//                 title: 'Actualizado',
-//                 text: 'Usuario modificado correctamente',
-//                 icon: 'success',
-//                 showConfirmButton: false,
-//                 timer: 2000
-//             })
-//             editar(id, result.value[0], result.value[1], result.value[2], result.value[3])
-//             setTimeout(() => {
-//                 location.reload();
-//             }, 2000);
-//         }
-//     })
-// }
+    const { value: formValues } = await Swal.fire({
+      title: "Editar",
+      html:
+        `<input id="runn" class="swal2-input" placeholder="Rut" value='${data.id}'>` +
+        `<input id="nombress" class="swal2-input" placeholder="Nombre" value='${data.nombres}'>` +
+        `<input id="apellido_pat" class="swal2-input" placeholder="Apellido paterno" value='${data.apellido_pat}'>` +
+        `<input id="apellido_mat" class="swal2-input" placeholder="Apellido materno" value='${data.apellido_mat}'>`,
+      focusConfirm: false,
+      showCancelButton: true,
+      preConfirm: () => {
+        return [
+          document.getElementById("runn").value,
+          document.getElementById("nombress").value,
+          document.getElementById("apellido_pat").value,
+          document.getElementById("apellido_mat").value,
+        ];
+      },
+    });
 
-function editModal(id) {
-    try {
-      fetch(`http://localhost:3000/api/funcionario/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          run.value = data.rut;
-          nombres.value = data.nombres;
-          apellido_pat.value = data.apellido_pat;
-          apellido_mat.value = data.apellido_mat;
-        })
-        .catch((error) => console.log(error));
-  
-      Swal.fire({
-        title: "Editar",
-        html:
-          '<input id="runn" class="swal2-input" placeholder="Rut">' +
-          '<input id="nombress" class="swal2-input" placeholder="Nombre">' +
-          '<input id="apellido_pat" class="swal2-input" placeholder="Apellido paterno">' +
-          '<input id="apellido_mat" class="swal2-input" placeholder="Apellido materno">',
-        focusConfirm: false,
-        preConfirm: () => {
-          return [
-            document.getElementById("runn").value,
-            document.getElementById("nombress").value,
-            document.getElementById("apellido_pat").value,
-            document.getElementById("apellido_mat").value,
-          ];
-        },
-      }).then((result) => {
-        if (result.value) {
-          swal
-            .fire({
-              title: "Actualizado",
-              text: "Usuario modificado correctamente",
-              icon: "success",
-              showConfirmButton: false,
-              timer: 2000,
-            })
-            .then(() => {
-              editar(
-                id,
-                result.value[0],
-                result.value[1],
-                result.value[2],
-                result.value[3]
-              );
-              setTimeout(() => {
-                location.reload();
-              }, 2000);
-            });
-        }
+    if (formValues) {
+      await Swal.fire({
+        title: "Actualizado",
+        text: "Usuario modificado correctamente",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 2000,
       });
-    } catch (error) {
-      console.log(error);
+
+      await editar(id, ...formValues);
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
     }
+  } catch (error) {
+    console.log(error);
   }
+}
+
   
 
 function editar(id, run, nombre, apellido_pat, apellido_mat){
