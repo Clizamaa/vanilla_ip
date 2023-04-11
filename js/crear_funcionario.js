@@ -158,30 +158,42 @@ const listUser= async()=>{
     }
 };
 
-async function editModal(id) {
-  try {
-    const response = await fetch(`http://localhost:3000/api/funcionario/${id}`);
-    const data = await response.json();
-    
-    const { value: formValues } = await Swal.fire({
-      title: "Editar",
-      html:
-        `<input id="runn" class="swal2-input" placeholder="Rut" value='${data.id}'>` +
-        `<input id="nombress" class="swal2-input" placeholder="Nombre" value='${data.nombres}'>` +
-        `<input id="apellido_pat" class="swal2-input" placeholder="Apellido paterno" value='${data.apellido_pat}'>` +
-        `<input id="apellido_mat" class="swal2-input" placeholder="Apellido materno" value='${data.apellido_mat}'>`,
-      focusConfirm: false,
-      showCancelButton: true,
-      preConfirm: () => {
-        return [
-          document.getElementById("runn").value,
-          document.getElementById("nombress").value,
-          document.getElementById("apellido_pat").value,
-          document.getElementById("apellido_mat").value,
-        ];
-      },
-    });
+const datosUsuario = async (id) => {
+    try{
+        const response = await fetch(`http://localhost:3000/api/funcionario/${id}`);
+        const data = await response.json()
+        data.forEach(item => {
+            document.getElementById('runn').value = item.rut;
+            document.getElementById('nombress').value = item.nombres;
+            document.getElementById('apellido_pat').value = item.apellido_pat;
+            document.getElementById('apellido_mat').value = item.apellido_mat;
+            console.log(item);
+        });
+    } catch(error){
+        console.log(error);
+    }
+}
 
+async function editModal(id) {
+    datosUsuario(id);
+        const { value: formValues } = await Swal.fire({
+            title: "Editar",
+            html:
+                `<input id="runn" class="swal2-input" placeholder="Rut" >` +
+                `<input id="nombress" class="swal2-input" placeholder="Nombre" >` +
+                `<input id="apellido_pat" class="swal2-input" placeholder="Apellido paterno" >` +
+                `<input id="apellido_mat" class="swal2-input" placeholder="Apellido materno" >`,
+            focusConfirm: false,
+            showCancelButton: true,
+            preConfirm: () => {
+                return Promise.resolve([
+                    document.getElementById("runn").value,
+                    document.getElementById("nombress").value,
+                    document.getElementById("apellido_pat").value,
+                    document.getElementById("apellido_mat").value,
+                ]);
+            },
+        });
     if (formValues) {
       await Swal.fire({
         title: "Actualizado",
@@ -196,9 +208,6 @@ async function editModal(id) {
         location.reload();
       }, 1000);
     }
-  } catch (error) {
-    console.log(error);
-  }
 }
 
   
