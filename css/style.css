@@ -17,3 +17,13 @@ body
     background-color: #0f1a3c !important;
 }
 
+.login{
+    margin-right: 600px;
+}
+
+.hidden{
+    display: none;
+}
+
+
+

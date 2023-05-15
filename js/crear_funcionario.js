@@ -1,3 +1,5 @@
+import { login, logout } from "./auth.js";
+
 window.addEventListener('load', async()=>{
     await initDataTable();
    });
@@ -7,6 +9,28 @@ const nombre = document.getElementById('nombre');
 const paterno = document.getElementById('paterno');
 const materno = document.getElementById('materno');
 const inputRut = document.getElementById('run');
+const logOut = document.getElementById('logOut');
+
+let currentUser;
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        currentUser = user;
+        console.log("Usuario Logeado:",currentUser.displayName);
+        
+    }else{
+        console.log('No hay usuario');
+        finish();
+    }
+});
+
+logOut.addEventListener('click',  (e) => {
+    logout();
+});
+
+function finish(){
+    window.location.href = "index.html";
+}
 
 
 let funcionarios = {
